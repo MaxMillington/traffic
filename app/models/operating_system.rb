@@ -1,5 +1,5 @@
 module TrafficSpy
-  class Url < ActiveRecord::Base
+  class OperatingSystem < ActiveRecord::Base
     has_many :payloads
 
   end
