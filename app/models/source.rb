@@ -34,6 +34,8 @@ module TrafficSpy
       payloads.group(:event).count.map { |key, value| [key.name.to_sym, value] }.reverse.to_h
     end
 
+
+
     private
 
     def get_url(payload)
@@ -99,12 +101,12 @@ module TrafficSpy
     end
 
     def urls_response_times
-      urls_response_times = Hash.new{ |h,k| h[k] = [] } 
+      urls_response_times = Hash.new{ |h,k| h[k] = [] }
       payloads.each do |payload|
         urls_response_times[get_url(payload).to_sym] << payload.response_time
       end
       urls_response_times
     end
-    
+
   end
 end
