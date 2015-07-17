@@ -1,2 +1,10 @@
 <h1>Application Details</h1>
 
+<p><%= @details.identifier %></p>
+<p><%= @details.root_url %></p>
+
+<p>Urls: <%= @details.most_requested_urls %></p>
+<p>Browsers: <%= @details.browser_breakdown %></p>
+<p>Operating Systems:<%= @details.os_breakdown %></p>
+<p>Resolutions:<%= @details.screen_resolution_breakdown %></p>
+<p>Average response times per url:<%= @details.avg_response_times_per_url %></p>
