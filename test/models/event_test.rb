@@ -6,16 +6,8 @@ module TrafficSpy
     def test_returns_hour_by_hour_breakdown_of_when_event_was_received
       populate
       event = Event.last
-      binding.pry
       event.hour_parser
-
-
     end
-
-    #we need requested_at and event_name and need to get all the requested_ats for
-    #an event name, then we need to break down the times hour by hour and return
-    #the data.
-
 
     private
 
