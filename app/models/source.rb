@@ -103,7 +103,7 @@ module TrafficSpy
     def urls_response_times
       urls_response_times = Hash.new{ |h,k| h[k] = [] }
       payloads.each do |payload|
-        urls_response_times[get_url(payload).to_sym] << payload.response_time
+        urls_response_times[get_url(payload).to_sym] << payload.responded_in
       end
       urls_response_times
     end

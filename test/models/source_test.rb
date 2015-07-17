@@ -108,27 +108,27 @@ module TrafficSpy
       [{"digest":"6", "url_id":find_url_id("http://jumpstartlab.com/apply"),
         "browser_id":find_browser_id("Chrome"), "operating_system_id":find_os_id("Macintosh"),
         "screen_resolution_id":find_screen_resolution_id("1280", "720"),
-        "response_time":6, "event_id": Event.find_by(name: "socialLogin").id},
+        "responded_in":6, "event_id": Event.find_by(name: "socialLogin").id},
        {"digest":"3", "url_id":find_url_id("http://jumpstartlab.com"),
          "browser_id":find_browser_id("Chrome"), "operating_system_id":find_os_id("Windows"),
          "screen_resolution_id":find_screen_resolution_id("800", "720"),
-         "response_time":8, "event_id": Event.find_by(name: "otherLogin").id},
+         "responded_in":8, "event_id": Event.find_by(name: "otherLogin").id},
        {"digest":"4", "url_id":find_url_id("http://jumpstartlab.com/blog"),
          "browser_id":find_browser_id("Firefox"), "operating_system_id":find_os_id("Macintosh"),
          "screen_resolution_id":find_screen_resolution_id("1280", "720"),
-         "response_time":7, "event_id": Event.find_by(name: "socialLogin").id},
+         "responded_in":7, "event_id": Event.find_by(name: "socialLogin").id},
        {"digest":"1", "url_id":find_url_id("http://jumpstartlab.com/apply"),
          "browser_id":find_browser_id("Safari"), "operating_system_id":find_os_id("Linux"),
          "screen_resolution_id":find_screen_resolution_id("800", "720"),
-         "response_time":6, "event_id": Event.find_by(name: "application").id},
+         "responded_in":6, "event_id": Event.find_by(name: "application").id},
        {"digest":"6", "url_id":find_url_id("http://jumpstartlab.com/apply"),
          "browser_id":find_browser_id("Safari"), "operating_system_id":find_os_id("Windows"),
          "screen_resolution_id":find_screen_resolution_id("1280", "720"),
-         "response_time":6, "event_id": Event.find_by(name: "application").id},
+         "responded_in":6, "event_id": Event.find_by(name: "application").id},
        {"digest":"6", "url_id":find_url_id("http://jumpstartlab.com"),
          "browser_id":find_browser_id("Chrome"), "operating_system_id":find_os_id("Macintosh"),
          "screen_resolution_id":find_screen_resolution_id("900", "540"),
-         "response_time":8, "event_id": Event.find_by(name: "application").id}]
+         "responded_in":8, "event_id": Event.find_by(name: "application").id}]
     end
 
     def find_url_id(url)
