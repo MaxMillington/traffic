@@ -2,12 +2,21 @@ require './test/test_helper'
 
 module TrafficSpy
   class ApplicationEventDetailsTest < Minitest::Test
-    def test_hour_by_hour_breakdown_of_event
+
+    def test_hour_by_hour_breakdown_of_event_is_displayed
       populate
       visit '/sources/jumpstartlab/events/application'
       within("#hour-by-hour-breakdown") do 
         assert page.has_css?('li', count: 2)
+        assert page.has_content?('hour 12: 2')
+        assert page.has_content?('hour 21: 1')
       end
+    end
+
+    def test_overall_event_count_is_displayed
+      populate
+      visit '/sources/jumpstartlab/events/application'
+      assert_equal "Overall: 3", find('p').text
     end
 
     private
