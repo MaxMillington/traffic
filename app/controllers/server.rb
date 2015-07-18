@@ -26,9 +26,9 @@ module TrafficSpy
       end
     end
 
-    get '/sources/:identifier' do
-      @data = Source.all
-      erb :aggregate
+    get '/sources/:identifier' do |identifier|
+      @details = Source.find_by(identifier: identifier)
+      erb :application_details
     end
 
     post '/sources/:identifier/data' do |identifier|
