@@ -2,23 +2,18 @@ module TrafficSpy
   class Event < ActiveRecord::Base
     has_many :payloads
 
-    def requested_at
+    def requests_by_hour_count
+      requested_at_hours.group_by { |hr| hr }.map { |k, v| [k, v.count] }.to_h
+    end
+
+    private
+
+    def requested_ats
       payloads.pluck(:requested_at)
     end
 
-    def hour_parser
-      requested_at.map do |time|
-        kangaroo = Time.parse(time)
-        kangaroo.strftime("%H")
-      end
-    end
-
-    def hasher
-      hour_parser.group_by do |x|
-          x
-      end.map do |key, value|
-        [key, value.count]
-      end.to_h
+    def requested_at_hours
+      requested_ats.map { |time| DateTime.parse(time).hour }
     end
 
   end
