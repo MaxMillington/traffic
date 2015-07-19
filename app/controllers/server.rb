@@ -1,6 +1,12 @@
 module TrafficSpy
   class Server < Sinatra::Base
 
+    helpers do
+      def bold(words)
+        "<strong>#{words}</strong>"
+      end
+    end
+
     get '/' do
       @sources = Source.all
       erb :index
