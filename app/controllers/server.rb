@@ -98,6 +98,6 @@ module TrafficSpy
         body 'No events have been defined.'
       end
     end
-
+    
   end
 end
