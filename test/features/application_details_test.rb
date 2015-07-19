@@ -5,12 +5,6 @@ module TrafficSpy
 
   class ApplicationDetailsTest < Minitest::Test
 
-    def test_the_page_has_a_title
-      populate
-      visit "/sources/jumpstartlab"
-      assert page.has_content?("Application Details")
-    end
-
     def test_app_details_page_displays_most_requested_urls
       populate
       visit "/sources/jumpstartlab"
