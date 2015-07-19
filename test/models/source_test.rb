@@ -33,9 +33,9 @@ module TrafficSpy
     def test_source_returns_screen_resolution_breakdown
       populate
       source = Source.find_by(identifier: 'jumpstartlab')
-      expected = {["1280 X 720"]=>3,
-                  ["800 X 720"]=>2,
-                  ["900 X 540"]=>1}
+      expected = {"1280 X 720"=>3,
+                  "800 X 720"=>2,
+                  "900 X 540"=>1}
       assert_equal expected, source.screen_resolution_breakdown
     end
 

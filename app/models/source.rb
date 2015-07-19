@@ -92,7 +92,7 @@ module TrafficSpy
       payloads.map do |payload|
         w = payload.screen_resolution.width
         h = payload.screen_resolution.height
-        ["#{w} X #{h}"]
+        "#{w} X #{h}"
       end
     end
 
