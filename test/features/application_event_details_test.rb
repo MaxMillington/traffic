@@ -1,13 +1,22 @@
-require_relative '../test_helper'
+require './test/test_helper'
 
 module TrafficSpy
-  class EventTest < ControllerTest
+  class ApplicationEventDetailsTest < Minitest::Test
 
-    def test_returns_hour_by_hour_breakdown_of_when_event_was_received
+    def test_hour_by_hour_breakdown_of_event_is_displayed
       populate
-      event = Event.find_by(name: "application")
-      expected = {12=>2, 21=>1}
-      assert_equal expected, event.requests_by_hour_count
+      visit '/sources/jumpstartlab/events/application'
+      within("#hour-by-hour-breakdown") do 
+        assert page.has_css?('li', count: 2)
+        assert page.has_content?('hour 12: 2')
+        assert page.has_content?('hour 21: 1')
+      end
+    end
+
+    def test_overall_event_count_is_displayed
+      populate
+      visit '/sources/jumpstartlab/events/application'
+      assert_equal "Overall: 3", find('p').text
     end
 
     private
