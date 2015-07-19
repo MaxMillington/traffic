@@ -2,6 +2,7 @@ module TrafficSpy
   class Server < Sinatra::Base
 
     get '/' do
+      @sources = Source.all
       erb :index
     end
 
@@ -27,8 +28,12 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do |identifier|
-      @details = Source.find_by(identifier: identifier)
-      erb :application_details
+      if @source = Source.find_by(identifier: identifier)
+        erb :application_details
+      else
+        status 403
+        body "Identifier does not exist"
+      end
     end
 
     post '/sources/:identifier/data' do |identifier|
@@ -73,7 +78,18 @@ module TrafficSpy
       end
     end
 
+    get '/sources/:identifier/events' do |identifier|
+      @source = Source.find_by(identifier: identifier)
+      if @source.most_received_events.length > 0
+        erb :application_events_index
+      else
+        status 403
+        body 'No events have been defined.'
+      end
+    end
+
     get '/sources/:identifier/events/:event_name' do |identifier, event_name|
+      @source = Source.find_by(identifier: identifier)
       source_id = Source.find_by(identifier: identifier).id
       if event = Event.find_by(name: event_name)
         payloads = Payload.where({source_id: source_id, event_id: event.id})
@@ -85,7 +101,27 @@ module TrafficSpy
         erb :application_event_details
       else
         status 403
-        body 'No event with the given name has been defined.'
+        erb :error
+      end
+    end
+
+    get '/sources/:identifier/urls/:path' do |identifier, path|
+      @source             = Source.find_by(identifier: identifier)
+      if   @url           = Url.find_by(address: @source.root_url + "/" + path)
+        url_id            = @url.id
+        payloads          = Payload.where({source_id: @source.id, url_id: url_id})
+        @identifier             = identifier
+        @path                   = path
+        @longest_response_time  = @url.longest_response_time
+        @shortest_response_time = @url.shortest_response_time
+        @average_response_time  = @url.average_response_time
+        @request_type           = @url.request_type
+        @most_popular_referrers = @url.most_popular_referrers
+        @most_popular_user_agent_browsers = @url.most_popular_user_agent_browsers
+        erb :application_url_statistics
+      else
+        status 403
+        body "Url has not been requested"
       end
     end
 

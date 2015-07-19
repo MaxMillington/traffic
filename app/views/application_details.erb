@@ -1,10 +1,86 @@
 <h1>Application Details</h1>
 
-<p><%= @details.identifier %></p>
-<p><%= @details.root_url %></p>
+<p>Application: <%= @source.identifier %></p>
+<p>Root URL: <%= @source.root_url %></p>
 
-<p>Urls: <%= @details.most_requested_urls %></p>
-<p>Browsers: <%= @details.browser_breakdown %></p>
-<p>Operating Systems:<%= @details.os_breakdown %></p>
-<p>Resolutions:<%= @details.screen_resolution_breakdown %></p>
-<p>Average response times per url:<%= @details.avg_response_times_per_url %></p>
+<p><a href="/sources/<%= @source.identifier %>/events">Events</a></p>
+
+<table id="most-requested-urls" border="1">
+  <tr>
+    <th colspan="2">Most Requested Urls</th>
+  </tr>
+  <tr>
+    <td>URL</td>
+    <td>Count</td>
+  </tr>
+  <% @source.most_requested_urls.each do |url, count| %>
+      <tr>
+        <td><a href="/sources/<%= @source.identifier %>/urls<%= url.split(@source.root_url).last %>"><%= url %></a></td>
+        <td><%= count %></td>
+      </tr>
+  <% end %>
+</table><br>
+
+<table id="browsers-breakdown" border="1">
+  <tr>
+    <th colspan="2">Browsers Breakdown</th>
+  </tr>
+  <tr>
+    <td>Browser</td>
+    <td>Count</td>
+  </tr>
+  <% @source.browser_breakdown.each do |browser, count| %>
+      <tr>
+        <td><%= browser %></td>
+        <td><%= count %></td>
+      </tr>
+  <% end %>
+</table>
+<br>
+<table id="os-breakdown" border="1">
+  <tr>
+    <th colspan="2">Operating Systems Breakdown</th>
+  </tr>
+  <tr>
+    <td>Browser</td>
+    <td>Count</td>
+  </tr>
+  <% @source.os_breakdown.each do |os, count| %>
+      <tr>
+        <td><%= os %></td>
+        <td><%= count %></td>
+      </tr>
+  <% end %>
+</table>
+<br>
+<table id="screen-resolutions" border="1">
+  <tr>
+    <th colspan="2">Screen Resolutions</th>
+  </tr>
+  <tr>
+    <td>Screen Resolution</td>
+    <td>Count</td>
+  </tr>
+  <% @source.screen_resolution_breakdown.each do |screen_resolution, count| %>
+      <tr>
+        <td><%= screen_resolution %></td>
+        <td><%= count %></td>
+      </tr>
+  <% end %>
+</table>
+<br>
+<table id="avg-response-times" border="1">
+  <tr>
+    <th colspan="2">Average Response Times</th>
+  </tr>
+  <tr>
+    <td>URL</td>
+    <td>Avg Response Time</td>
+  </tr>
+  <% @source.avg_response_times_per_url.each do |url, avg_response_time| %>
+      <tr>
+        <td><%= url %></td>
+        <td><%= avg_response_time %></td>
+      </tr>
+  <% end %>
+</table>
