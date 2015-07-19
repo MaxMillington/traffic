@@ -7,10 +7,60 @@ module TrafficSpy
 
     def test_the_page_has_a_title
       populate
-
       visit "/sources/jumpstartlab"
-
       assert page.has_content?("Application Details")
+    end
+
+    def test_app_details_page_displays_most_requested_urls
+      populate
+      visit "/sources/jumpstartlab"
+      within("#most-requested-urls") do
+        assert page.has_content?("http://jumpstartlab.com/apply")
+        assert page.has_content?("http://jumpstartlab.com")
+        assert page.has_content?("http://jumpstartlab.com/blog")
+        assert page.has_content?("3")
+        assert page.has_content?("2")
+        assert page.has_content?("1")
+      end
+    end
+
+    def test_app_details_page_displays_browser_breakdown
+      populate
+      visit "/sources/jumpstartlab"
+      within("#browsers-breakdown") do
+        assert page.has_content?("Chrome")
+        assert page.has_content?("Firefox")
+        assert page.has_content?("Safari")
+        assert page.has_content?("3")
+        assert page.has_content?("2")
+        assert page.has_content?("1")
+      end
+    end
+
+    def test_app_details_page_displays_os_breakdown
+      populate
+      visit "/sources/jumpstartlab"
+      within("#os-breakdown") do
+        assert page.has_content?("Macintosh")
+        assert page.has_content?("Windows")
+        assert page.has_content?("Linux")
+        assert page.has_content?("3")
+        assert page.has_content?("2")
+        assert page.has_content?("1")
+      end
+    end
+
+    def test_app_details_page_displays_screen_resolutions_across_all_requests
+      populate
+      visit "/sources/jumpstartlab"
+      within("#screen-resolutions") do
+        assert page.has_content?("1280 X 720")
+        assert page.has_content?("800 X 720")
+        assert page.has_content?("900 X 540")
+        assert page.has_content?("3")
+        assert page.has_content?("2")
+        assert page.has_content?("1")
+      end
     end
 
   private
