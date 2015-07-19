@@ -100,8 +100,8 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/urls/:path' do |identifier, path|
-      @source                = Source.find_by(identifier: identifier)
-      if   @url              = Url.find_by(address: @source.root_url + "/" + path)
+      @source             = Source.find_by(identifier: identifier)
+      if   @url           = Url.find_by(address: @source.root_url + "/" + path)
         url_id            = @url.id
         payloads          = Payload.where({source_id: @source.id, url_id: url_id})
         @identifier             = identifier
@@ -116,7 +116,7 @@ module TrafficSpy
       else
         status 403
         body "Url has not been requested"
-        erb :error 
+        erb :error
       end
     end
 
