@@ -72,5 +72,16 @@ module TrafficSpy
         status 200
       end
     end
+
+    get '/sources/:identifier/events' do |identifier|
+      @source = Source.find_by(identifier: identifier)
+      if @source.most_received_events.length > 0
+        erb :application_events_index
+      else
+        status 403
+        body 'No events have been defined.'
+      end
+    end
+
   end
 end
