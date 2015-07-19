@@ -1,5 +1,5 @@
 <h1>Application Events Index</h1>
-<h2>Application: <%= @source.identifier %></h1>
+<h2>Application: <%= @source.identifier %></h2>
 <ul id="list-of-events">
   <% @source.most_received_events.each do |event, count| %>
     <li><a href="/sources/<%= @source.identifier %>/events/<%= event %>"><%= event %></a>: <%= count %></li>
