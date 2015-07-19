@@ -1,1 +1,8 @@
 <h1>Hello, Traffic Spyer</h1>
+
+<h3>Click to view statistics for each identifier:</h3>
+<% @sources.map do |source| %>
+  <ul>
+    <li><a href="/sources/<%= source.identifier %>"><%= source.identifier %></a></li>
+  </ul>
+<% end %>

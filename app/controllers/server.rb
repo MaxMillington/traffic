@@ -2,6 +2,7 @@ module TrafficSpy
   class Server < Sinatra::Base
 
     get '/' do
+      @sources = Source.all
       erb :index
     end
 
@@ -27,8 +28,12 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do |identifier|
-      @source = Source.find_by(identifier: identifier)
-      erb :application_details
+      if @source = Source.find_by(identifier: identifier)
+        erb :application_details
+      else
+        status 403
+        body "Identifier does not exist"
+      end
     end
 
     post '/sources/:identifier/data' do |identifier|
@@ -73,7 +78,18 @@ module TrafficSpy
       end
     end
 
+    get '/sources/:identifier/events' do |identifier|
+      @source = Source.find_by(identifier: identifier)
+      if @source.most_received_events.length > 0
+        erb :application_events_index
+      else
+        status 403
+        body 'No events have been defined.'
+      end
+    end
+
     get '/sources/:identifier/events/:event_name' do |identifier, event_name|
+      @source = Source.find_by(identifier: identifier)
       source_id = Source.find_by(identifier: identifier).id
       if event = Event.find_by(name: event_name)
         payloads = Payload.where({source_id: source_id, event_id: event.id})
@@ -85,17 +101,7 @@ module TrafficSpy
         erb :application_event_details
       else
         status 403
-        body 'No event with the given name has been defined.'
-      end
-    end
-
-    get '/sources/:identifier/events' do |identifier|
-      @source = Source.find_by(identifier: identifier)
-      if @source.most_received_events.length > 0
-        erb :application_events_index
-      else
-        status 403
-        body 'No events have been defined.'
+        erb :error
       end
     end
 
@@ -116,7 +122,6 @@ module TrafficSpy
       else
         status 403
         body "Url has not been requested"
-        erb :error
       end
     end
 

@@ -15,7 +15,7 @@
   </tr>
   <% @source.most_requested_urls.each do |url, count| %>
       <tr>
-        <td><a href="/sources/<%= @source.identifier %>/urls/<%= url.split(@source.root_url).last %>"><%= url %></a></td>
+        <td><a href="/sources/<%= @source.identifier %>/urls<%= url.split(@source.root_url).last %>"><%= url %></a></td>
         <td><%= count %></td>
       </tr>
   <% end %>
