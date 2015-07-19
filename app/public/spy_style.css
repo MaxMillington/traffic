@@ -1,5 +1,9 @@
 html {
   background-color: black;
   background-size: cover;
-  color: white; 
+  color: white;
+}
+
+a {
+  color: #7F7F7F
 }
