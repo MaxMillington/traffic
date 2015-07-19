@@ -1,0 +1,12 @@
+<a href="/sources/<%= @identifier %>/events">&#8592; Application Event Index</a>
+<h1>Application Event Details</h1>
+<h2>Application: <%= @identifier %></h2>
+<h2>Event: <%= @event %></h2>
+<h3>Hour By Hour Breakdown</h3>
+<ul id="hour-by-hour-breakdown">
+  <% @event_count_by_hour.each do |hour, count| %>
+    <li>hour <%= hour %>: <%= count %></li>
+  <% end %>
+</ul>
+<p>Overall: <%= @overall_count %></p>
+

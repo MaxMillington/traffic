@@ -72,5 +72,22 @@ module TrafficSpy
         status 200
       end
     end
+
+    get '/sources/:identifier/events/:event_name' do |identifier, event_name|
+      source_id = Source.find_by(identifier: identifier).id
+      if event = Event.find_by(name: event_name)
+        payloads = Payload.where({source_id: source_id, event_id: event.id})
+        requested_hrs = payloads.pluck(:requested_at).map { |requested_at| DateTime.parse(requested_at).hour }
+        @event_count_by_hour = requested_hrs.group_by { |hr| hr }.map { |k, v| [k, v.count] }.to_h.sort
+        @overall_count = requested_hrs.size
+        @identifier = identifier
+        @event = event_name
+        erb :application_event_details
+      else
+        status 403
+        body 'No event with the given name has been defined.'
+      end
+    end
+
   end
 end
