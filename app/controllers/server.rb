@@ -98,6 +98,28 @@ module TrafficSpy
         body 'No events have been defined.'
       end
     end
-    
+
+    get '/sources/:identifier/urls/:path' do |identifier, path|
+      @source = Source.find_by(identifier: identifier)
+      @url = Url.find_by(address: @source.root_url + "/" + path)
+      url_id = @url.id
+      payloads = Payload.where({source_id: @source.id, url_id: url_id})
+      @identifier = identifier
+      @path = path
+      @longest_response_time = @url.longest_response_time
+      @shortest_response_time = @url.shortest_response_time
+      @average_response_time = @url.average_response_time
+      @request_type = @url.request_type
+      @most_popular_referrers = @url.most_popular_referrers
+      @most_popular_user_agent_browsers = @url.most_popular_user_agent_browsers
+      binding.pry 
+      if url_id == nil
+        status 403
+        body "Url has not been requested"
+      else
+        erb :application_url_statistics
+      end
+    end
+
   end
 end
