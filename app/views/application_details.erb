@@ -1,7 +1,7 @@
 <h1>Application Details</h1>
 
-<p>Application: <%= @source.identifier %></p>
-<p>Root URL: <%= @source.root_url %></p>
+<p>Application: <%= bold(@source.identifier) %></p>
+<p>Root URL: <%= bold(@source.root_url) %></p>
 
 <p><a href="/sources/<%= @source.identifier %>/events">Events</a></p>
 
