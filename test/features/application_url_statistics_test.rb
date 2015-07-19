@@ -14,8 +14,10 @@ module TrafficSpy
     def test_response_time_populates
       populate
       visit '/sources/jumpstartlab/urls/apply'
-      assert page.has_css?('li', count: 6)
-      assert page.has_content?("11")
+      within("#stats") do
+        assert page.has_css?('li', count: 6)
+        assert page.has_content?("11")
+      end
     end
 
     private
