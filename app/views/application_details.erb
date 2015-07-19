@@ -3,6 +3,8 @@
 <p>Application: <%= @source.identifier %></p>
 <p>Root URL: <%= @source.root_url %></p>
 
+<p><a href="/sources/<%= @source.identifier %>/events">Events</a></p>
+
 <table id="most-requested-urls" border="1">
   <tr>
     <th colspan="2">Most Requested Urls</th>
@@ -13,7 +15,7 @@
   </tr>
   <% @source.most_requested_urls.each do |url, count| %>
       <tr>
-        <td><%= url %></td>
+        <td><a href="/sources/<%= @source.identifier %>/urls/<%= url.split(@source.root_url).last %>"><%= url %></a></td>
         <td><%= count %></td>
       </tr>
   <% end %>
