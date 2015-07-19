@@ -6,30 +6,36 @@ module TrafficSpy
     def test_source_returns_most_requested_urls
       populate
       source = Source.find_by(identifier: 'jumpstartlab')
-      expected = ["http://jumpstartlab.com/apply",
-                 "http://jumpstartlab.com",
-                 "http://jumpstartlab.com/blog"]
+      expected = {"http://jumpstartlab.com/apply"=>3,
+                  "http://jumpstartlab.com"=>2,
+                  "http://jumpstartlab.com/blog"=>1}
      assert_equal expected, source.most_requested_urls
     end
 
     def test_source_returns_browser_breakdown
       populate
       source = Source.find_by(identifier: 'jumpstartlab')
-      expected = ["Chrome", "Safari", "Firefox"]
+      expected = {"Chrome"=>3,
+                  "Safari"=>2,
+                  "Firefox"=>1}
       assert_equal expected, source.browser_breakdown
     end
 
     def test_source_returns_os_breakdown
       populate
       source = Source.find_by(identifier: 'jumpstartlab')
-      expected = ["Macintosh", "Windows", "Linux"]
+      expected = {"Macintosh"=>3,
+                  "Windows"=>2,
+                  "Linux"=>1}
       assert_equal expected, source.os_breakdown
     end
 
     def test_source_returns_screen_resolution_breakdown
       populate
       source = Source.find_by(identifier: 'jumpstartlab')
-      expected = [["1280", "720"], ["800", "720"], ["900", "540"]]
+      expected = {"1280 X 720"=>3,
+                  "800 X 720"=>2,
+                  "900 X 540"=>1}
       assert_equal expected, source.screen_resolution_breakdown
     end
 

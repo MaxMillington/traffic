@@ -9,24 +9,40 @@ module TrafficSpy
     has_many :screen_resolutions, through: :payloads
 
     def most_requested_urls
-      sort_urls
+      urls.group_by { |url| url}
+          .map { |url, value| [url, value.count] }
+          .sort_by { |url, count| count}
+          .reverse
+          .to_h
     end
 
     def browser_breakdown
-      sort_browsers
+      browsers.group_by { |browser| browser}
+          .map { |browser, value | [browser, value.count] }
+          .sort_by { |browser, count|  count}
+          .reverse
+          .to_h
     end
 
     def os_breakdown
-      sort_operating_systems
+      operating_systems.group_by { |operating_system| operating_system}
+          .map { |operating_system, value | [operating_system, value.count] }
+          .sort_by { |operating_system, count| count}
+          .reverse
+          .to_h
     end
 
     def screen_resolution_breakdown
-      sort_screen_resolutions
+      screen_resolutions.group_by { |screen_resolution| screen_resolution}
+          .map { |screen_resolution, value | [screen_resolution, value.count] }
+          .sort_by { |screen_resolution, count| count}
+          .reverse
+          .to_h
     end
 
     def avg_response_times_per_url
       urls_response_times.map do |url, response_times|
-        [url, response_times.reduce { |sum, time| sum + time }.to_f / response_times.size]
+        [url, (response_times.reduce { |sum, time| sum + time }.to_f / response_times.size).round(2)]
       end.to_h
     end
 
@@ -52,10 +68,6 @@ module TrafficSpy
       urls.reduce(Hash.new(0)) {|h, v| h[v] += 1; h}
     end
 
-    def sort_urls
-      urls.uniq.sort_by {|v| url_counts[v]}.reverse
-    end
-
     def browsers
       payloads.map do |payload|
         payload.browser.name
@@ -64,10 +76,6 @@ module TrafficSpy
 
     def browser_counts
       browsers.reduce(Hash.new(0)) {|h, v| h[v] += 1; h}
-    end
-
-    def sort_browsers
-      browsers.uniq.sort_by {|v| browser_counts[v]}.reverse
     end
 
     def operating_systems
@@ -80,24 +88,16 @@ module TrafficSpy
       operating_systems.reduce(Hash.new(0)) {|h, v| h[v] += 1; h}
     end
 
-    def sort_operating_systems
-      operating_systems.uniq.sort_by {|v| operating_system_counts[v]}.reverse
-    end
-
     def screen_resolutions
       payloads.map do |payload|
         w = payload.screen_resolution.width
         h = payload.screen_resolution.height
-        [w, h]
+        "#{w} X #{h}"
       end
     end
 
     def screen_resolution_counts
       screen_resolutions.reduce(Hash.new(0)) {|h, v| h[v] += 1; h}
-    end
-
-    def sort_screen_resolutions
-      screen_resolutions.uniq.sort_by {|v| screen_resolution_counts[v]}.reverse
     end
 
     def urls_response_times

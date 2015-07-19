@@ -27,7 +27,7 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do |identifier|
-      @details = Source.find_by(identifier: identifier)
+      @source = Source.find_by(identifier: identifier)
       erb :application_details
     end
 
