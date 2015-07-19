@@ -2,11 +2,11 @@
 
 <h2>Application: <%= @source.identifier %> </h2>
 <ul id="stats">
-  <p>Statistics for <%= @url %></p>
-<li><%= @longest_response_time %> </li>
-<li><%= @shortest_response_time %> </li>
-<li><%= @average_response_time %> </li>
-<li><%= @request_type %> </li>
-<li><%= @most_popular_referrers %> </li>
-<li><%= @most_popular_user_agent_browsers %> </li>
+  <p>Statistics for <%= @source.root_url %></p>
+<li id="longest-response">Longest response time: <%= @longest_response_time %> </li>
+<li>Shortest response time: <%= @shortest_response_time %> </li>
+<li>Average response time: <%= @average_response_time %> </li>
+<li>Request types: <%= @request_type %> </li>
+<li>Most popular referrers: <%= @most_popular_referrers %> </li>
+<li>Most popular user agent browsers: <%= @most_popular_user_agent_browsers %> </li>
 </ul>

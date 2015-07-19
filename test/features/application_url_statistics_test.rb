@@ -3,9 +3,19 @@ require './test/test_helper'
 module TrafficSpy
   class ApplicationUrlStatisticsTest < Minitest::Test
 
-    def test_url_statistics
+    def test_url_referrers_populates
       populate
       visit '/sources/jumpstartlab/urls/apply'
+      within ('#stats') do
+        assert page.has_content?("www.google.com")
+      end
+    end
+
+    def test_response_time_populates
+      populate
+      visit '/sources/jumpstartlab/urls/apply'
+      assert page.has_css?('li', count: 6)
+      assert page.has_content?("11")
     end
 
     private
@@ -67,49 +77,49 @@ module TrafficSpy
         "screen_resolution_id":find_screen_resolution_id("1280", "720"), "referred_by": "www.google.com",
         "response_time":6, "event_id": Event.find_by(name: "socialLogin").id,
         "requested_at":"2013-02-16 12:38:28 -0700", "responded_in":9, "request_type": "GET", },
-       {"digest":"3", "url_id":find_url_id("http://jumpstartlab.com"),
-        "browser_id":find_browser_id("Chrome"), "operating_system_id":find_os_id("Windows"),
-        "screen_resolution_id":find_screen_resolution_id("800", "720"), "referred_by": "www.google.com",
-        "response_time":8, "event_id": Event.find_by(name: "otherLogin").id,
-        "requested_at":"2013-02-16 21:38:28 -0700", "responded_in":7, "request_type": "GET"},
-       {"digest":"4", "url_id":find_url_id("http://jumpstartlab.com/blog"),
-        "browser_id":find_browser_id("Firefox"), "operating_system_id":find_os_id("Macintosh"),
-        "screen_resolution_id":find_screen_resolution_id("1280", "720"), "referred_by": "www.turing.io",
-        "response_time":7, "event_id": Event.find_by(name: "socialLogin").id,
-        "requested_at":"2013-02-16 21:38:28 -0700", "responded_in":8, "request_type": "GET"},
-       {"digest":"1", "url_id":find_url_id("http://jumpstartlab.com/apply"),
-        "browser_id":find_browser_id("Safari"), "operating_system_id":find_os_id("Linux"),
-        "screen_resolution_id":find_screen_resolution_id("800", "720"), "referred_by": "www.wsj.com",
-        "response_time":6, "event_id": Event.find_by(name: "application").id,
-        "requested_at":"2013-02-16 12:38:28 -0700", "responded_in":7, "request_type": "GET"},
-       {"digest":"6", "url_id":find_url_id("http://jumpstartlab.com/apply"),
-        "browser_id":find_browser_id("Safari"), "operating_system_id":find_os_id("Windows"),
-        "screen_resolution_id":find_screen_resolution_id("1280", "720"), "referred_by": "www.google.com",
-        "response_time":6, "event_id": Event.find_by(name: "application").id,
-        "requested_at":"2013-02-16 12:38:28 -0700", "responded_in":11, "request_type": "GET"},
-       {"digest":"6", "url_id":find_url_id("http://jumpstartlab.com"),
-        "browser_id":find_browser_id("Chrome"), "operating_system_id":find_os_id("Macintosh"),
-        "screen_resolution_id":find_screen_resolution_id("900", "540"), "referred_by": "www.turing.io",
-        "response_time":8, "event_id": Event.find_by(name: "application").id,
-        "requested_at":"2013-02-16 21:38:28 -0700", "responded_in":9, "request_type": "GET"}]
-    end
+        {"digest":"3", "url_id":find_url_id("http://jumpstartlab.com"),
+          "browser_id":find_browser_id("Chrome"), "operating_system_id":find_os_id("Windows"),
+          "screen_resolution_id":find_screen_resolution_id("800", "720"), "referred_by": "www.google.com",
+          "response_time":8, "event_id": Event.find_by(name: "otherLogin").id,
+          "requested_at":"2013-02-16 21:38:28 -0700", "responded_in":7, "request_type": "GET"},
+          {"digest":"4", "url_id":find_url_id("http://jumpstartlab.com/blog"),
+            "browser_id":find_browser_id("Firefox"), "operating_system_id":find_os_id("Macintosh"),
+            "screen_resolution_id":find_screen_resolution_id("1280", "720"), "referred_by": "www.turing.io",
+            "response_time":7, "event_id": Event.find_by(name: "socialLogin").id,
+            "requested_at":"2013-02-16 21:38:28 -0700", "responded_in":8, "request_type": "GET"},
+            {"digest":"1", "url_id":find_url_id("http://jumpstartlab.com/apply"),
+              "browser_id":find_browser_id("Safari"), "operating_system_id":find_os_id("Linux"),
+              "screen_resolution_id":find_screen_resolution_id("800", "720"), "referred_by": "www.wsj.com",
+              "response_time":6, "event_id": Event.find_by(name: "application").id,
+              "requested_at":"2013-02-16 12:38:28 -0700", "responded_in":7, "request_type": "GET"},
+              {"digest":"6", "url_id":find_url_id("http://jumpstartlab.com/apply"),
+                "browser_id":find_browser_id("Safari"), "operating_system_id":find_os_id("Windows"),
+                "screen_resolution_id":find_screen_resolution_id("1280", "720"), "referred_by": "www.google.com",
+                "response_time":6, "event_id": Event.find_by(name: "application").id,
+                "requested_at":"2013-02-16 12:38:28 -0700", "responded_in":11, "request_type": "GET"},
+                {"digest":"6", "url_id":find_url_id("http://jumpstartlab.com"),
+                  "browser_id":find_browser_id("Chrome"), "operating_system_id":find_os_id("Macintosh"),
+                  "screen_resolution_id":find_screen_resolution_id("900", "540"), "referred_by": "www.turing.io",
+                  "response_time":8, "event_id": Event.find_by(name: "application").id,
+                  "requested_at":"2013-02-16 21:38:28 -0700", "responded_in":9, "request_type": "GET"}]
+                end
 
-    def find_url_id(url)
-      Url.find_by(address: url).id
-    end
+                def find_url_id(url)
+                  Url.find_by(address: url).id
+                end
 
-    def find_browser_id(url)
-      Browser.find_by(name: url).id
-    end
+                def find_browser_id(url)
+                  Browser.find_by(name: url).id
+                end
 
-    def find_os_id(url)
-      OperatingSystem.find_by(name: url).id
-    end
+                def find_os_id(url)
+                  OperatingSystem.find_by(name: url).id
+                end
 
-    def find_screen_resolution_id(width, height)
-      ScreenResolution.find_by_width_and_height(width, height).id
-    end
+                def find_screen_resolution_id(width, height)
+                  ScreenResolution.find_by_width_and_height(width, height).id
+                end
 
 
-  end
-end
+              end
+            end
