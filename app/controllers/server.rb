@@ -96,6 +96,11 @@ module TrafficSpy
       end
     end
 
+    post '/sources/:identifier' do |identifier|
+      @source = Source.find_by(identifier: identifier)
+      erb :"shared/details", :layout => false
+    end
+
     get '/sources/:identifier/events' do |identifier|
       @source = Source.find_by(identifier: identifier)
       if @source.most_received_events.length > 0

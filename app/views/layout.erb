@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <link rel="stylesheet" href="/bootstrap.min.css">
-  <link rel="stylesheet" href="/bootstrap.theme.min.css">
-  <link rel="stylesheet" href="<%= url("/spy_style.css")%>">
+  <head>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap.theme.min.css">
+    <link rel="stylesheet" href="<%= url("/spy_style.css")%>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+      var interval;
+      var pathname = window.location.pathname;
+      function updateDetails() {
+        $("#details").load(pathname, {});
+      }
+      function startUpdate() {
+        clearInterval(interval);
+        interval = setInterval( function(){updateDetails();}, 1000);
+      }
+      $(document).ready(function(){
+        startUpdate();
+      });
+    </script>
   <title>Traffic Spy</title>
 </head>
 <div class="container">
